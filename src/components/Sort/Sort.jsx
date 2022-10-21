@@ -1,9 +1,16 @@
 import React from "react";
 
-function Sort() {
+function Sort({ selectedType, setType }) {
   const [isVisible, setVisible] = React.useState(false);
-  const [selectedType, setType] = React.useState(0);
-  const typeSort = ["популярности", "цене", "алфавиту"];
+
+  const typeSort = [
+    { name: "популярности (ASC)", sortProperty: "rating" },
+    { name: "популярности (DESC)", sortProperty: "-rating" },
+    { name: "цене (ASC)", sortProperty: "price" },
+    { name: "цене (DESC)", sortProperty: "-price" },
+    { name: "алфавиту (ASC)", sortProperty: "name" },
+    { name: "алфавиту (DESC)", sortProperty: "-name" },
+  ];
 
   const changeType = (index) => {
     setType(index);
@@ -26,20 +33,14 @@ function Sort() {
           />
         </svg>
         <b>Сортировка по:</b>
-        <span onClick={() => setVisible(!isVisible)}>
-          {typeSort[selectedType]}
-        </span>
+        <span onClick={() => setVisible(!isVisible)}>{selectedType.name}</span>
       </div>
       {isVisible && (
         <div className="sort__popup">
           <ul>
             {typeSort.map((sort, index) => (
-              <li
-                key={index}
-                className={selectedType === index ? "active" : ""}
-                onClick={() => changeType(index)}
-              >
-                {sort}
+              <li key={index} onClick={() => changeType(typeSort[index])}>
+                {sort.name}
               </li>
             ))}
           </ul>

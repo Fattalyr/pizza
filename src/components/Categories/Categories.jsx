@@ -1,8 +1,6 @@
 import React from "react";
 
-function Categories() {
-  const [activeCat, setActiveCat] = React.useState(0);
-
+function Categories({ activeCat, setActiveCat }) {
   const categories = [
     "Все",
     "Мясные",
@@ -12,16 +10,12 @@ function Categories() {
     "Закрытые",
   ];
 
-  const onClickCategories = (index) => {
-    setActiveCat(index);
-  };
-
   return (
     <div className="categories">
       <ul>
         {categories.map((item, index) => (
           <li
-            onClick={() => onClickCategories(index)}
+            onClick={() => setActiveCat(index)}
             className={activeCat === index ? "active" : ""}
             key={index}
           >
