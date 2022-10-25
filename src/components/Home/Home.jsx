@@ -5,6 +5,7 @@ import Sort from "../Sort/Sort";
 import Skeleton from "../Skeleton/Skeleton";
 import Pagination from "../Pagination/Pagination";
 import { SearchContext } from "../../App";
+import { useSelector } from "react-redux";
 
 function Home() {
   const { searchValue } = React.useContext(SearchContext);
@@ -12,11 +13,10 @@ function Home() {
   const [pizzasCount, setPizzasCount] = React.useState(0); //Общее количтво пицц
   const [onPage, setOnPage] = React.useState(1); //Выбранная страницы
   const [isLoading, setLoading] = React.useState(false); //Загрузка
-  const [activeCat, setActiveCat] = React.useState(0); //Активная категория
-  const [selectedType, setType] = React.useState({
-    name: "популярности (ASC)",
-    sortProperty: "rating",
-  }); //Сортировка
+
+  const { activeCatogorie, activeSortBy } = useSelector(
+    (state) => state.filterSlice
+  );
 
   const loadPizzas = (items) => {
     setItems(items);
@@ -24,10 +24,12 @@ function Home() {
   };
 
   React.useEffect(() => {
-    let categoriesId = `${activeCat > 0 ? `category=${activeCat}` : ""}`;
-    let sortPizza = `sortBy=${selectedType.sortProperty.replace("-", "")}`;
+    let categoriesId = `${
+      activeCatogorie > 0 ? `category=${activeCatogorie}` : ""
+    }`;
+    let sortPizza = `sortBy=${activeSortBy.sortProperty.replace("-", "")}`;
     let order_ASC_DESC = `order=${
-      selectedType.sortProperty.includes("-") ? "desc" : "asc"
+      activeSortBy.sortProperty.includes("-") ? "desc" : "asc"
     }`;
     setLoading(false);
     fetch(
@@ -39,19 +41,23 @@ function Home() {
         setPizzasCount(items.count);
       });
     window.scrollTo(0, 0);
-  }, [activeCat, selectedType, onPage]);
+  }, [activeCatogorie, activeSortBy, onPage]);
 
-  let pizzaMas = pizzas
-    .filter((obj) => obj.name.toLowerCase().includes(searchValue.toLowerCase()))
-    .map((pizza, index) => <Pizza {...pizza} key={index} />);
+  let pizzaMas =
+    pizzas &&
+    pizzas
+      .filter((obj) =>
+        obj.name.toLowerCase().includes(searchValue.toLowerCase())
+      )
+      .map((pizza, index) => <Pizza {...pizza} key={index} />);
 
   let sceleton = [...new Array(6)].map((i, index) => <Skeleton key={index} />);
 
   return (
     <div className="container">
       <div className="content__top">
-        <Categories activeCat={activeCat} setActiveCat={setActiveCat} />
-        <Sort selectedType={selectedType} setType={setType} />
+        <Categories />
+        <Sort />
       </div>
       <h2 className="content__title">Все пиццы</h2>
       <div className="content__items">{isLoading ? pizzaMas : sceleton}</div>

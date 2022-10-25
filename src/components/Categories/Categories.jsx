@@ -1,22 +1,20 @@
 import React from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { setActiveCat } from "../../Redux/filterSlice";
 
-function Categories({ activeCat, setActiveCat }) {
-  const categories = [
-    "Все",
-    "Мясные",
-    "Вегетерианские",
-    "Гриль",
-    "Острые",
-    "Закрытые",
-  ];
+function Categories() {
+  const dispatch = useDispatch();
+  const { categories, activeCatogorie } = useSelector(
+    (state) => state.filterSlice
+  );
 
   return (
     <div className="categories">
       <ul>
         {categories.map((item, index) => (
           <li
-            onClick={() => setActiveCat(index)}
-            className={activeCat === index ? "active" : ""}
+            onClick={() => dispatch(setActiveCat(index))}
+            className={activeCatogorie === index ? "active" : ""}
             key={index}
           >
             {item}

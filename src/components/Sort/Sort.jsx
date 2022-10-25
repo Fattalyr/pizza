@@ -1,19 +1,15 @@
 import React from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { setActiveSortBy } from "../../Redux/filterSlice";
 
-function Sort({ selectedType, setType }) {
+function Sort() {
   const [isVisible, setVisible] = React.useState(false);
+  const { sortBy, activeSortBy } = useSelector((state) => state.filterSlice);
+  const dispatch = useDispatch();
 
-  const typeSort = [
-    { name: "популярности (ASC)", sortProperty: "rating" },
-    { name: "популярности (DESC)", sortProperty: "-rating" },
-    { name: "цене (ASC)", sortProperty: "price" },
-    { name: "цене (DESC)", sortProperty: "-price" },
-    { name: "алфавиту (ASC)", sortProperty: "name" },
-    { name: "алфавиту (DESC)", sortProperty: "-name" },
-  ];
-
-  const changeType = (index) => {
-    setType(index);
+  const changeType = (sort) => {
+    console.log(sort);
+    dispatch(setActiveSortBy(sort));
     setVisible(!isVisible);
   };
   return (
@@ -33,13 +29,17 @@ function Sort({ selectedType, setType }) {
           />
         </svg>
         <b>Сортировка по:</b>
-        <span onClick={() => setVisible(!isVisible)}>{selectedType.name}</span>
+        <span onClick={() => setVisible(!isVisible)}>{activeSortBy.name}</span>
       </div>
       {isVisible && (
         <div className="sort__popup">
           <ul>
-            {typeSort.map((sort, index) => (
-              <li key={index} onClick={() => changeType(typeSort[index])}>
+            {sortBy.map((sort, index) => (
+              <li
+                className={sort.name == activeSortBy.name ? "active" : ""}
+                key={index}
+                onClick={() => changeType(sort)}
+              >
                 {sort.name}
               </li>
             ))}
