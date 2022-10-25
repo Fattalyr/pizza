@@ -1,20 +1,21 @@
 import React from "react";
-import Categories from "../Categories/Categories";
-import Pizza from "../Pizza/Pizza";
-import Sort from "../Sort/Sort";
+import axios from "axios";
 import Skeleton from "../Skeleton/Skeleton";
 import Pagination from "../Pagination/Pagination";
-import { SearchContext } from "../../App";
 import { useSelector } from "react-redux";
+
+import { SearchContext } from "../../App";
+
+import Sort from "../Sort/Sort";
+import Pizza from "../Pizza/Pizza";
+import Categories from "../Categories/Categories";
 
 function Home() {
   const { searchValue } = React.useContext(SearchContext);
   const [pizzas, setItems] = React.useState([]); //Массив пиццц
-  const [pizzasCount, setPizzasCount] = React.useState(0); //Общее количтво пицц
-  const [onPage, setOnPage] = React.useState(1); //Выбранная страницы
   const [isLoading, setLoading] = React.useState(false); //Загрузка
-
-  const { activeCatogorie, activeSortBy } = useSelector(
+  const [countPizzas, setCountPizzas] = React.useState(0); //Количество пицц
+  const { activeCatogorie, activeSortBy, onPage } = useSelector(
     (state) => state.filterSlice
   );
 
@@ -31,24 +32,25 @@ function Home() {
     let order_ASC_DESC = `order=${
       activeSortBy.sortProperty.includes("-") ? "desc" : "asc"
     }`;
+
     setLoading(false);
-    fetch(
-      `https://634fde2edf22c2af7b5c5141.mockapi.io/items?page=${onPage}&limit=8&${categoriesId}&${sortPizza}&${order_ASC_DESC}`
-    )
-      .then((res) => res.json())
-      .then((items) => {
-        loadPizzas(items.items);
-        setPizzasCount(items.count);
+    axios
+      .get(
+        `https://634fde2edf22c2af7b5c5141.mockapi.io/items?search=${searchValue}&page=${onPage}&limit=8&${categoriesId}&${sortPizza}&${order_ASC_DESC}`
+      )
+      .then((res) => {
+        loadPizzas(res.data.items);
+        setCountPizzas(res.data.count);
       });
     window.scrollTo(0, 0);
-  }, [activeCatogorie, activeSortBy, onPage]);
+  }, [activeCatogorie, activeSortBy, onPage, searchValue]);
 
   let pizzaMas =
     pizzas &&
     pizzas
-      .filter((obj) =>
-        obj.name.toLowerCase().includes(searchValue.toLowerCase())
-      )
+      // .filter((obj) =>
+      //   obj.name.toLowerCase().includes(searchValue.toLowerCase())
+      // )
       .map((pizza, index) => <Pizza {...pizza} key={index} />);
 
   let sceleton = [...new Array(6)].map((i, index) => <Skeleton key={index} />);
@@ -61,7 +63,7 @@ function Home() {
       </div>
       <h2 className="content__title">Все пиццы</h2>
       <div className="content__items">{isLoading ? pizzaMas : sceleton}</div>
-      <Pagination pizzasCount={pizzasCount} setOnPage={setOnPage} />
+      <Pagination countPizzas={countPizzas} />
     </div>
   );
 }

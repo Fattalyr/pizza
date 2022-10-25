@@ -1,9 +1,23 @@
 import React from "react";
 import { SearchContext } from "../../App";
 import style from "./Search.module.scss";
+import debounce from "lodash.debounce";
 
 function Search() {
-  const { searchValue, setSearchValue } = React.useContext(SearchContext);
+  const [value, setValue] = React.useState("");
+  const { setSearchValue } = React.useContext(SearchContext);
+  const inputRef = React.useRef();
+
+  const updateSearchValue = React.useCallback(
+    debounce((str) => setSearchValue(str), 250),
+    []
+  );
+
+  const onChangeInput = (e) => {
+    setValue(e.target.value);
+    updateSearchValue(e.target.value);
+  };
+
   return (
     <div className={style.root}>
       <svg
@@ -14,14 +28,19 @@ function Search() {
         <path d="M29.71,28.29l-6.5-6.5-.07,0a12,12,0,1,0-1.39,1.39s0,.05,0,.07l6.5,6.5a1,1,0,0,0,1.42,0A1,1,0,0,0,29.71,28.29ZM14,24A10,10,0,1,1,24,14,10,10,0,0,1,14,24Z" />
       </svg>
       <input
-        onChange={(e) => setSearchValue(e.target.value)}
-        value={searchValue}
+        ref={inputRef}
+        onChange={onChangeInput}
+        value={value}
         className={style.input}
         placeholder="Поиск пиццы..."
       />
-      {searchValue && (
+      {value && (
         <svg
-          onClick={() => setSearchValue("")}
+          onClick={() => {
+            setSearchValue("");
+            setValue("");
+            inputRef.current.focus();
+          }}
           className={style.clearIcon}
           viewBox="0 0 200 200"
           xmlns="http://www.w3.org/2000/svg"

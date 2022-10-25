@@ -17,8 +17,9 @@ const initialState = {
     { name: "алфавиту (ASC)", sortProperty: "name" },
     { name: "алфавиту (DESC)", sortProperty: "-name" },
   ],
-  activeCatogorie: 0,
-  activeSortBy: { name: "популярности (ASC)", sortProperty: "rating" },
+  activeCatogorie: 0, //выбранная категория
+  activeSortBy: { name: "популярности (ASC)", sortProperty: "rating" }, //выбранная сортировка
+  onPage: 1, //выбранная страница
 };
 
 export const filterSlice = createSlice({
@@ -31,9 +32,12 @@ export const filterSlice = createSlice({
     setActiveSortBy: (state, action) => {
       state.activeSortBy = action.payload;
     },
+    setPage: (state, action) => {
+      state.onPage = action.payload + 1;
+    },
   },
 });
 
-export const { setActiveCat, setActiveSortBy } = filterSlice.actions;
+export const { setActiveCat, setActiveSortBy, setPage } = filterSlice.actions;
 
 export default filterSlice.reducer;
