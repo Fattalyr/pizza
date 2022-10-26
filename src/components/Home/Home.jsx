@@ -46,12 +46,7 @@ function Home() {
   }, [activeCatogorie, activeSortBy, onPage, searchValue]);
 
   let pizzaMas =
-    pizzas &&
-    pizzas
-      // .filter((obj) =>
-      //   obj.name.toLowerCase().includes(searchValue.toLowerCase())
-      // )
-      .map((pizza, index) => <Pizza {...pizza} key={index} />);
+    pizzas && pizzas.map((pizza, index) => <Pizza {...pizza} key={index} />);
 
   let sceleton = [...new Array(6)].map((i, index) => <Skeleton key={index} />);
 

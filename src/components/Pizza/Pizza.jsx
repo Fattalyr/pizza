@@ -1,9 +1,18 @@
 import React from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { addPizza } from "../../Redux/cartSlice";
 
-function Pizza({ imageUrl, name, sizes, price, types }) {
+function Pizza({ imageUrl, name, sizes, price, types, id }) {
   const [typePizza, setTypePizza] = React.useState(0);
   const [sizePizza, setSizePizza] = React.useState(0);
   const typesPizzas = ["тонкое", "традиционное"];
+
+  const items = { imageUrl, name, sizes, price, types, id, count: 1 };
+  const dispatch = useDispatch();
+  const count = useSelector((state) =>
+    state.cartSlice.items.find((items) => items.id === id)
+  );
+  const addedCount = count ? count.count : 0;
 
   return (
     <div className="pizza-block">
@@ -35,7 +44,10 @@ function Pizza({ imageUrl, name, sizes, price, types }) {
       </div>
       <div className="pizza-block__bottom">
         <div className="pizza-block__price">от {price} ₽</div>
-        <button className="button button--outline button--add">
+        <button
+          onClick={() => dispatch(addPizza(items))}
+          className="button button--outline button--add"
+        >
           <svg
             width="12"
             height="12"
@@ -49,7 +61,7 @@ function Pizza({ imageUrl, name, sizes, price, types }) {
             />
           </svg>
           <span>Добавить</span>
-          <i>2</i>
+          {addedCount > 0 && <i>{addedCount}</i>}
         </button>
       </div>
     </div>
