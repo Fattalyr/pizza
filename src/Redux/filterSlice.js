@@ -10,15 +10,15 @@ const initialState = {
     "Закрытые",
   ],
   sortBy: [
-    { name: "популярности (ASC)", sortProperty: "rating" },
-    { name: "популярности (DESC)", sortProperty: "-rating" },
+    { name: "популярности (ASC)", sortProperty: "-rating" },
+    { name: "популярности (DESC)", sortProperty: "rating" },
     { name: "цене (ASC)", sortProperty: "price" },
     { name: "цене (DESC)", sortProperty: "-price" },
     { name: "алфавиту (ASC)", sortProperty: "name" },
     { name: "алфавиту (DESC)", sortProperty: "-name" },
   ],
   activeCatogorie: 0, //выбранная категория
-  activeSortBy: { name: "популярности (ASC)", sortProperty: "rating" }, //выбранная сортировка
+  activeSortBy: { name: "популярности (ASC)", sortProperty: "-rating" }, //выбранная сортировка
   onPage: 1, //выбранная страница
 };
 

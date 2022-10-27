@@ -7,7 +7,15 @@ function Pizza({ imageUrl, name, sizes, price, types, id }) {
   const [sizePizza, setSizePizza] = React.useState(0);
   const typesPizzas = ["тонкое", "традиционное"];
 
-  const items = { imageUrl, name, sizes, price, types, id, count: 1 };
+  const items = {
+    imageUrl,
+    name,
+    size: sizes[sizePizza],
+    price,
+    type: typesPizzas[typePizza],
+    id,
+    count: 1,
+  };
   const dispatch = useDispatch();
   const count = useSelector((state) =>
     state.cartSlice.items.find((items) => items.id === id)

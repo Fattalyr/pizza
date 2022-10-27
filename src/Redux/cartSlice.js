@@ -6,67 +6,50 @@ const initialState = {
   totalPrice: 0,
 };
 
+const counterPizzas = (state) => {
+  state.countPizzas = state.items.reduce((sum, item) => item.count + sum, 0);
+};
+
+const counterPrice = (state) => {
+  state.totalPrice = state.items.reduce(
+    (sum, item) => item.count * item.price + sum,
+    0
+  );
+};
 export const cartSlice = createSlice({
   name: "cart",
   initialState,
   reducers: {
     addPizza: (state, action) => {
-      if (state.items.find((item) => item.id === action.payload.id)) {
-        const index = state.items.findIndex(
-          (item) => item.id === action.payload.id
-        );
+      const pizza = state.items.find((item) => item.id === action.payload.id);
 
-        state.items[index] = {
-          ...action.payload,
-          count: state.items[index].count + 1,
-        };
+      if (pizza) {
+        pizza.count++;
       } else {
         state.items.push(action.payload);
       }
-
-      state.countPizzas = state.items.reduce(
-        (sum, item) => item.count + sum,
-        0
-      );
-      state.totalPrice = state.items.reduce(
-        (sum, item) => item.count * item.price + sum,
-        0
-      );
+      counterPizzas(state);
+      counterPrice(state);
     },
     minusPizza: (state, action) => {
-      const index = state.items.findIndex(
-        (item) => item.id === action.payload.id
-      );
-      if (state.items[index].count > 1) {
-        state.items[index] = {
-          ...action.payload,
-          count: state.items[index].count - 1,
-        };
+      const pizza = state.items.find((item) => item.id === action.payload.id);
+
+      if (pizza.count > 1) {
+        pizza.count--;
       } else {
         state.items = state.items.filter(
           (item) => item.id !== action.payload.id
         );
       }
-      state.countPizzas = state.items.reduce(
-        (sum, item) => item.count + sum,
-        0
-      );
-      state.totalPrice = state.items.reduce(
-        (sum, item) => item.count * item.price + sum,
-        0
-      );
+      counterPizzas(state);
+      counterPrice(state);
     },
 
     delletePizza: (state, action) => {
       state.items = state.items.filter((item) => item.id !== action.payload.id);
-      state.countPizzas = state.items.reduce(
-        (sum, item) => item.count + sum,
-        0
-      );
-      state.totalPrice = state.items.reduce(
-        (sum, item) => item.count * item.price + sum,
-        0
-      );
+
+      counterPizzas(state);
+      counterPrice(state);
     },
 
     revomeCartItems: (state) => {

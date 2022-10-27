@@ -3,13 +3,17 @@ import { useDispatch, useSelector } from "react-redux";
 import { revomeCartItems } from "../../Redux/cartSlice";
 import CartItem from "./CartItem";
 import { Link } from "react-router-dom";
+import CartEmpty from "./CartEmpty";
 
 function Cart() {
   const dispatch = useDispatch();
   const { items, countPizzas, totalPrice } = useSelector(
     (state) => state.cartSlice
   );
-  return (
+
+  return !countPizzas ? (
+    <CartEmpty />
+  ) : (
     <div className="container container--cart">
       <div className="cart">
         <div className="cart__top">

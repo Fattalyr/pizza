@@ -1,5 +1,5 @@
 import React from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { addPizza, delletePizza, minusPizza } from "../../Redux/cartSlice";
 
 function CartItem({ item }) {
@@ -11,7 +11,9 @@ function CartItem({ item }) {
       </div>
       <div className="cart__item-info">
         <h3>{item.name}</h3>
-        <p>тонкое тесто, 26 см.</p>
+        <p>
+          {item.type} тесто, {item.size} см.
+        </p>
       </div>
       <div className="cart__item-count">
         <div
