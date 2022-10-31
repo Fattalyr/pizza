@@ -4,7 +4,6 @@ import Pagination from "../Pagination/Pagination";
 import { useSelector, useDispatch } from "react-redux";
 import { fetchPizzas, selectPizzas } from "../../Redux/fetchPizzasSlice";
 import { selectFilter } from "../../Redux/filterSlice";
-
 import Sort from "../Sort/Sort";
 import Pizza from "../Pizza/Pizza";
 import Categories from "../Categories/Categories";
