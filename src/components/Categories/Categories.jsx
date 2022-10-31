@@ -1,12 +1,10 @@
 import React from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { setActiveCat } from "../../Redux/filterSlice";
+import { setActiveCat, selectFilter } from "../../Redux/filterSlice";
 
 function Categories() {
   const dispatch = useDispatch();
-  const { categories, activeCatogorie } = useSelector(
-    (state) => state.filterSlice
-  );
+  const { categories, activeCatogorie } = useSelector(selectFilter);
 
   return (
     <div className="categories">

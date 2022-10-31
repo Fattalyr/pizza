@@ -38,6 +38,8 @@ export const fetchPizzasSlice = createSlice({
   },
 });
 
+export const selectPizzas = (state) => state.fetchPizzasSlice; // селектор, просто функция, перенесли в Slice
+
 export const {} = fetchPizzasSlice.actions;
 
 export default fetchPizzasSlice.reducer;

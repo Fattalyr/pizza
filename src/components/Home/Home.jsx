@@ -2,8 +2,8 @@ import React from "react";
 import Skeleton from "../Skeleton/Skeleton";
 import Pagination from "../Pagination/Pagination";
 import { useSelector, useDispatch } from "react-redux";
-import { fetchPizzas } from "../../Redux/fetchPizzasSlice";
-import { SearchContext } from "../../App";
+import { fetchPizzas, selectPizzas } from "../../Redux/fetchPizzasSlice";
+import { selectFilter } from "../../Redux/filterSlice";
 
 import Sort from "../Sort/Sort";
 import Pizza from "../Pizza/Pizza";
@@ -12,15 +12,10 @@ import Categories from "../Categories/Categories";
 function Home() {
   const dispatch = useDispatch();
 
-  const { searchValue } = React.useContext(SearchContext);
+  const { items, countPizzas, loading } = useSelector(selectPizzas);
 
-  const { items, countPizzas, loading } = useSelector(
-    (state) => state.fetchPizzasSlice
-  );
-
-  const { activeCatogorie, activeSortBy, onPage } = useSelector(
-    (state) => state.filterSlice
-  );
+  const { activeCatogorie, activeSortBy, onPage, searchValue } =
+    useSelector(selectFilter);
 
   React.useEffect(() => {
     const categoriesId = `${

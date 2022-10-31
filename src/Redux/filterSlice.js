@@ -20,6 +20,7 @@ const initialState = {
   activeCatogorie: 0, //выбранная категория
   activeSortBy: { name: "популярности (ASC)", sortProperty: "-rating" }, //выбранная сортировка
   onPage: 1, //выбранная страница
+  searchValue: "", //поиск пиццы в строке поиска
 };
 
 export const filterSlice = createSlice({
@@ -35,9 +36,14 @@ export const filterSlice = createSlice({
     setPage: (state, action) => {
       state.onPage = action.payload + 1;
     },
+    setSearchValue: (state, action) => {
+      state.searchValue = action.payload;
+    },
   },
 });
+export const selectFilter = (state) => state.filterSlice;
 
-export const { setActiveCat, setActiveSortBy, setPage } = filterSlice.actions;
+export const { setActiveCat, setActiveSortBy, setPage, setSearchValue } =
+  filterSlice.actions;
 
 export default filterSlice.reducer;

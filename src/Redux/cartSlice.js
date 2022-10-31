@@ -60,6 +60,10 @@ export const cartSlice = createSlice({
   },
 });
 
+export const selectCart = (state) => state.cartSlice;
+export const selectCountCart = (id) => (state) =>
+  state.cartSlice.items.find((items) => items.id === id);
+
 export const { addPizza, minusPizza, revomeCartItems, delletePizza } =
   cartSlice.actions;
 

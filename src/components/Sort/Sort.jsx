@@ -1,10 +1,10 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { setActiveSortBy } from "../../Redux/filterSlice";
+import { setActiveSortBy, selectFilter } from "../../Redux/filterSlice";
 
 function Sort() {
   const [isVisible, setVisible] = React.useState(false);
-  const { sortBy, activeSortBy } = useSelector((state) => state.filterSlice);
+  const { sortBy, activeSortBy } = useSelector(selectFilter);
   const dispatch = useDispatch();
   const sortRef = React.useRef();
 

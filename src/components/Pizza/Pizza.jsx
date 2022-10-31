@@ -1,6 +1,6 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { addPizza } from "../../Redux/cartSlice";
+import { addPizza, selectCountCart } from "../../Redux/cartSlice";
 
 function Pizza({ imageUrl, name, sizes, price, types, id }) {
   const [typePizza, setTypePizza] = React.useState(0);
@@ -17,9 +17,7 @@ function Pizza({ imageUrl, name, sizes, price, types, id }) {
     count: 1,
   };
   const dispatch = useDispatch();
-  const count = useSelector((state) =>
-    state.cartSlice.items.find((items) => items.id === id)
-  );
+  const count = useSelector(selectCountCart(id));
   const addedCount = count ? count.count : 0;
 
   return (
