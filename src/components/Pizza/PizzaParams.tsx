@@ -1,13 +1,12 @@
 import axios from "axios";
-import { isEmpty } from "lodash";
 import React from "react";
 
 import { useParams, useNavigate } from "react-router-dom";
 
-function Pizza() {
+function PizzaParams() {
   let { id } = useParams();
   const navigate = useNavigate();
-  const [pizza, setPizza] = React.useState({});
+  const [pizza, setPizza] = React.useState<{imageUrl: string, name:string, price:number}>();
 
   React.useEffect(() => {
     async function getPizza() {
@@ -25,7 +24,7 @@ function Pizza() {
   }, []);
   return (
     <>
-      {!isEmpty(pizza) ? (
+      {pizza ? (
         <div className="pizza-block">
           <img
             className="pizza-block__image"
@@ -42,4 +41,4 @@ function Pizza() {
   );
 }
 
-export default Pizza;
+export default PizzaParams;

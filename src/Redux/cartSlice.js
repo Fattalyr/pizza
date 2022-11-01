@@ -32,21 +32,19 @@ export const cartSlice = createSlice({
       counterPrice(state);
     },
     minusPizza: (state, action) => {
-      const pizza = state.items.find((item) => item.id === action.payload.id);
+      const pizza = state.items.find((item) => item.id === action.payload);
 
       if (pizza.count > 1) {
         pizza.count--;
       } else {
-        state.items = state.items.filter(
-          (item) => item.id !== action.payload.id
-        );
+        state.items = state.items.filter((item) => item.id !== action.payload);
       }
       counterPizzas(state);
       counterPrice(state);
     },
 
     delletePizza: (state, action) => {
-      state.items = state.items.filter((item) => item.id !== action.payload.id);
+      state.items = state.items.filter((item) => item.id !== action.payload);
 
       counterPizzas(state);
       counterPrice(state);

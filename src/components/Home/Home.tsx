@@ -8,7 +8,7 @@ import Sort from "../Sort/Sort";
 import Pizza from "../Pizza/Pizza";
 import Categories from "../Categories/Categories";
 
-function Home() {
+const Home: React.FC = () => {
   const dispatch = useDispatch();
 
   const { items, countPizzas, loading } = useSelector(selectPizzas);
@@ -24,8 +24,9 @@ function Home() {
     const order_ASC_DESC = `order=${
       activeSortBy.sortProperty.includes("-") ? "desc" : "asc"
     }`;
-
+    
     dispatch(
+      //@ts-ignore
       fetchPizzas({
         categoriesId,
         sortPizza,
@@ -38,7 +39,7 @@ function Home() {
     window.scrollTo(0, 0);
   }, [activeCatogorie, activeSortBy, onPage, searchValue]);
 
-  let pizzaMas = items.map((pizza, index) => <Pizza {...pizza} key={index} />);
+  let pizzaMas = items.map((pizza: any, index: number) => <Pizza {...pizza} key={index} />);
 
   let sceleton = [...new Array(6)].map((i, index) => <Skeleton key={index} />);
 

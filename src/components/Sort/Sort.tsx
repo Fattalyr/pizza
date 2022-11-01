@@ -2,19 +2,19 @@ import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { setActiveSortBy, selectFilter } from "../../Redux/filterSlice";
 
-function Sort() {
+const Sort: React.FC = () => {
   const [isVisible, setVisible] = React.useState(false);
-  const { sortBy, activeSortBy } = useSelector(selectFilter);
+  const { sortBy, activeSortBy }  = useSelector(selectFilter);
   const dispatch = useDispatch();
-  const sortRef = React.useRef();
+  const sortRef = React.useRef<HTMLDivElement>(null);
 
-  const changeType = (sort) => {
+  const changeType = (sort: any) => {
     dispatch(setActiveSortBy(sort));
     setVisible(!isVisible);
   };
 
   React.useEffect(() => {
-    const handleClickOutside = (e) => {
+    const handleClickOutside = (e: any) => {
       if (!e.path.includes(sortRef.current)) {
         setVisible(false);
       }
@@ -45,7 +45,7 @@ function Sort() {
       {isVisible && (
         <div className="sort__popup">
           <ul>
-            {sortBy.map((sort, index) => (
+            {sortBy.map((sort: any, index: number) => (
               <li
                 className={sort.name == activeSortBy.name ? "active" : ""}
                 key={index}

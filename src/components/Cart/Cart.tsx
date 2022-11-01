@@ -5,7 +5,7 @@ import CartItem from "./CartItem";
 import { Link } from "react-router-dom";
 import CartEmpty from "./CartEmpty";
 
-function Cart() {
+const Cart: React.FC = () => {
   const dispatch = useDispatch();
   const { items, countPizzas, totalPrice } = useSelector(selectCart);
 
@@ -91,7 +91,7 @@ function Cart() {
           </div>
         </div>
         <div className="content__items">
-          {items && items.map((item) => <CartItem key={item.id} item={item} />)}
+          {items && items.map((item: any) => <CartItem key={item.id} {...item} />)}
         </div>
         <div className="cart__bottom">
           <div className="cart__bottom-details">
@@ -133,6 +133,6 @@ function Cart() {
       </div>
     </div>
   );
-}
+};
 
 export default Cart;

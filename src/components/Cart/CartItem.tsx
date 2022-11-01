@@ -2,23 +2,36 @@ import React from "react";
 import { useDispatch } from "react-redux";
 import { addPizza, delletePizza, minusPizza } from "../../Redux/cartSlice";
 
-function CartItem({ item }) {
+type CartItemProps = {
+  id: string;
+  imageUrl: string;
+  name: string;
+  type: string;
+  size: number;
+  count: number;
+  price: number;
+}
+
+const CartItem: React.FC<CartItemProps> = ({ id, imageUrl, name, type, size, count, price }) => {
+
+  const pizza = {id, imageUrl, name, type, size, count, price};
   const dispatch = useDispatch();
+  
   return (
     <div className="cart__item">
       <div className="cart__item-img">
-        <img className="pizza-block__image" src={item.imageUrl} alt="Pizza" />
+        <img className="pizza-block__image" src={imageUrl} alt="Pizza" />
       </div>
       <div className="cart__item-info">
-        <h3>{item.name}</h3>
+        <h3>{name}</h3>
         <p>
-          {item.type} тесто, {item.size} см.
+          {type} тесто, {size} см.
         </p>
       </div>
       <div className="cart__item-count">
         <div
           className="button button--outline button--circle cart__item-count-minus"
-          onClick={() => dispatch(minusPizza(item))}
+          onClick={() => dispatch(minusPizza(id))}
         >
           <svg
             width="10"
@@ -37,10 +50,10 @@ function CartItem({ item }) {
             />
           </svg>
         </div>
-        <b>{item.count}</b>
+        <b>{count}</b>
         <div
           className="button button--outline button--circle cart__item-count-plus"
-          onClick={() => dispatch(addPizza(item))}
+          onClick={() => dispatch(addPizza(pizza))}
         >
           <svg
             width="10"
@@ -61,11 +74,11 @@ function CartItem({ item }) {
         </div>
       </div>
       <div className="cart__item-price">
-        <b>{item.price * item.count} ₽</b>
+        <b>{price * count} ₽</b>
       </div>
       <div
         className="cart__item-remove"
-        onClick={() => dispatch(delletePizza(item))}
+        onClick={() => dispatch(delletePizza(id))}
       >
         <div className="button button--outline button--circle">
           <svg
@@ -88,6 +101,6 @@ function CartItem({ item }) {
       </div>
     </div>
   );
-}
+};
 
 export default CartItem;

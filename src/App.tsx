@@ -7,7 +7,7 @@ import { Routes, Route } from "react-router-dom";
 import Cart from "./components/Cart/Cart";
 import PizzaParams from "./components/Pizza/PizzaParams";
 
-function App() {
+const App: React.FC = () => {
   return (
     <div className="wrapper">
       <Header />

@@ -6,7 +6,7 @@ import { useSelector } from "react-redux";
 import { selectCart } from "../../Redux/cartSlice";
 import { useLocation } from "react-router-dom";
 
-function Header() {
+const Header: React.FC = () => {
   const { countPizzas, totalPrice } = useSelector(selectCart);
   const location = useLocation();
 
