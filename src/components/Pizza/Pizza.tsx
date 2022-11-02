@@ -2,18 +2,10 @@ import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { addPizza, selectCountCart } from "../../Redux/cartSlice";
 import { Link } from "react-router-dom";
+import { TPizza } from "../../Redux/fetchPizzasSlice";
 
-type PizzaItemProps = {
-  id: string;
-  imageUrl: string;
-  name: string;
-  types: number[];
-  sizes: number[];
-  count: number;
-  price: number;
-}
 
-const Pizza: React.FC<PizzaItemProps>= ({ imageUrl, name, sizes, price, types, id }) => {
+const Pizza: React.FC<TPizza>= ({ imageUrl, name, sizes, price, types, id }) => {
   const [typePizza, setTypePizza] = React.useState(0);
   const [sizePizza, setSizePizza] = React.useState(0);
   const typesPizzas = ["тонкое", "традиционное"];

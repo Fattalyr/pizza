@@ -1,15 +1,16 @@
 import React from "react";
 import Skeleton from "../Skeleton/Skeleton";
 import Pagination from "../Pagination/Pagination";
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector} from "react-redux";
 import { fetchPizzas, selectPizzas } from "../../Redux/fetchPizzasSlice";
 import { selectFilter } from "../../Redux/filterSlice";
 import Sort from "../Sort/Sort";
 import Pizza from "../Pizza/Pizza";
 import Categories from "../Categories/Categories";
+import { useAppDispatch } from "../../Redux/store";
 
 const Home: React.FC = () => {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
   const { items, countPizzas, loading } = useSelector(selectPizzas);
 
@@ -26,7 +27,6 @@ const Home: React.FC = () => {
     }`;
     
     dispatch(
-      //@ts-ignore
       fetchPizzas({
         categoriesId,
         sortPizza,
@@ -37,9 +37,9 @@ const Home: React.FC = () => {
     );
 
     window.scrollTo(0, 0);
-  }, [activeCatogorie, activeSortBy, onPage, searchValue]);
+  }, [activeCatogorie, activeSortBy, dispatch, onPage, searchValue]);
 
-  let pizzaMas = items.map((pizza: any, index: number) => <Pizza {...pizza} key={index} />);
+  let pizzaMas = items.map((pizza, index) => <Pizza {...pizza} key={index} />);
 
   let sceleton = [...new Array(6)].map((i, index) => <Skeleton key={index} />);
 

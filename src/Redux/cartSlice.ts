@@ -1,26 +1,45 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { RootState } from "./store";
 
-const initialState = {
+
+type TCartItem = {
+  id: string;
+  imageUrl: string;
+  name: string;
+  type: string;
+  size: number;
+  count: number;
+  price: number;
+}
+
+interface ICartSliceState {
+  items:TCartItem[];
+  countPizzas: number;
+  totalPrice: number;
+}
+
+const initialState: ICartSliceState = {
   items: [],
   countPizzas: 0,
   totalPrice: 0,
 };
 
-const counterPizzas = (state) => {
+const counterPizzas = (state: ICartSliceState) => {
   state.countPizzas = state.items.reduce((sum, item) => item.count + sum, 0);
 };
 
-const counterPrice = (state) => {
+const counterPrice = (state: ICartSliceState) => {
   state.totalPrice = state.items.reduce(
     (sum, item) => item.count * item.price + sum,
     0
   );
 };
+
 export const cartSlice = createSlice({
   name: "cart",
   initialState,
   reducers: {
-    addPizza: (state, action) => {
+    addPizza: (state, action: PayloadAction<TCartItem>) => {
       const pizza = state.items.find((item) => item.id === action.payload.id);
 
       if (pizza) {
@@ -31,10 +50,10 @@ export const cartSlice = createSlice({
       counterPizzas(state);
       counterPrice(state);
     },
-    minusPizza: (state, action) => {
+    minusPizza: (state, action: PayloadAction<string>) => {
       const pizza = state.items.find((item) => item.id === action.payload);
 
-      if (pizza.count > 1) {
+      if (pizza && pizza.count > 1) {
         pizza.count--;
       } else {
         state.items = state.items.filter((item) => item.id !== action.payload);
@@ -43,7 +62,7 @@ export const cartSlice = createSlice({
       counterPrice(state);
     },
 
-    delletePizza: (state, action) => {
+    delletePizza: (state, action: PayloadAction<string>) => {
       state.items = state.items.filter((item) => item.id !== action.payload);
 
       counterPizzas(state);
@@ -58,8 +77,8 @@ export const cartSlice = createSlice({
   },
 });
 
-export const selectCart = (state) => state.cartSlice;
-export const selectCountCart = (id) => (state) =>
+export const selectCart = (state: RootState) => state.cartSlice;
+export const selectCountCart = (id: string) => (state: RootState) =>
   state.cartSlice.items.find((items) => items.id === id);
 
 export const { addPizza, minusPizza, revomeCartItems, delletePizza } =

@@ -9,7 +9,7 @@ const Categories: React.FC = () => {
   return (
     <div className="categories">
       <ul>
-        {categories.map((item: any, index: number) => (
+        {categories.map((item, index: number) => (
           <li
             onClick={() => dispatch(setActiveCat(index))}
             className={activeCatogorie === index ? "active" : ""}

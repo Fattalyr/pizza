@@ -1,6 +1,6 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { setActiveSortBy, selectFilter } from "../../Redux/filterSlice";
+import { setActiveSortBy, selectFilter, TSortItem } from "../../Redux/filterSlice";
 
 const Sort: React.FC = () => {
   const [isVisible, setVisible] = React.useState(false);
@@ -8,14 +8,15 @@ const Sort: React.FC = () => {
   const dispatch = useDispatch();
   const sortRef = React.useRef<HTMLDivElement>(null);
 
-  const changeType = (sort: any) => {
-    dispatch(setActiveSortBy(sort));
+  const changeType = (obj: TSortItem) => {
+    dispatch(setActiveSortBy(obj));
     setVisible(!isVisible);
   };
 
   React.useEffect(() => {
-    const handleClickOutside = (e: any) => {
-      if (!e.path.includes(sortRef.current)) {
+    const handleClickOutside = (event: MouseEvent) => {
+     const _event = event as MouseEvent & { path: Node[]} //переопределили тип MouseEvent
+      if (sortRef.current && !_event.path.includes(sortRef.current)) {
         setVisible(false);
       }
     };
@@ -45,9 +46,9 @@ const Sort: React.FC = () => {
       {isVisible && (
         <div className="sort__popup">
           <ul>
-            {sortBy.map((sort: any, index: number) => (
+            {sortBy.map((sort, index) => (
               <li
-                className={sort.name == activeSortBy.name ? "active" : ""}
+                className={sort.name === activeSortBy.name ? "active" : ""}
                 key={index}
                 onClick={() => changeType(sort)}
               >

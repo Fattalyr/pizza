@@ -8,7 +8,7 @@ type PaginationProps = {
   countPizzas: number
 }
 
-const Pagination:React.FC<PaginationProps> = ({ countPizzas }) => {
+const Pagination: React.FC<PaginationProps> = ({ countPizzas }) => {
   const dispatch = useDispatch();
   return (
     <div>
