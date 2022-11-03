@@ -1,14 +1,13 @@
-import React from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { revomeCartItems, selectCart } from "../../Redux/cartSlice";
-import CartItem from "./CartItem";
-import { Link } from "react-router-dom";
-import CartEmpty from "./CartEmpty";
+import React from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { revomeCartItems, selectCart } from '../../Redux/cartSlice';
+import CartItem from './CartItem';
+import { Link } from 'react-router-dom';
+import CartEmpty from './CartEmpty';
 
 const Cart: React.FC = () => {
   const dispatch = useDispatch();
   const { items, countPizzas, totalPrice } = useSelector(selectCart);
-
   return !countPizzas ? (
     <CartEmpty />
   ) : (
@@ -47,10 +46,7 @@ const Cart: React.FC = () => {
             </svg>
             Корзина
           </h2>
-          <div
-            className="cart__clear"
-            onClick={() => dispatch(revomeCartItems())}
-          >
+          <div className="cart__clear" onClick={() => dispatch(revomeCartItems())}>
             <svg
               width="20"
               height="20"
@@ -103,10 +99,7 @@ const Cart: React.FC = () => {
             </span>
           </div>
           <div className="cart__bottom-buttons">
-            <Link
-              to="/"
-              className="button button--outline button--add go-back-btn"
-            >
+            <Link to="/" className="button button--outline button--add go-back-btn">
               <svg
                 width="8"
                 height="14"

@@ -1,11 +1,15 @@
+// import { useWhyDidYouUpdate } from "ahooks"; //смотрит за перерисовкой компонента
 import React from "react";
-import { useSelector, useDispatch } from "react-redux";
-import { setActiveCat, selectFilter } from "../../Redux/filterSlice";
+import {useDispatch } from "react-redux";
+import { setActiveCat} from "../../Redux/filterSlice";
 
-const Categories: React.FC = () => {
+type TCategoriesProps = {
+  categories: string[];
+  activeCatogorie: number;
+}
+const Categories: React.FC<TCategoriesProps> = React.memo (({categories, activeCatogorie}) => {
   const dispatch = useDispatch();
-  const { categories, activeCatogorie } = useSelector(selectFilter);
-
+  // useWhyDidYouUpdate('useWhyDidYouUpdateComponent', {categories, activeCatogorie}); 
   return (
     <div className="categories">
       <ul>
@@ -21,6 +25,6 @@ const Categories: React.FC = () => {
       </ul>
     </div>
   );
-}
+})
 
 export default Categories;

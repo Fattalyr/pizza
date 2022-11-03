@@ -1,6 +1,6 @@
-import React from "react";
-import { useDispatch } from "react-redux";
-import { addPizza, delletePizza, minusPizza } from "../../Redux/cartSlice";
+import React from 'react';
+import { useDispatch } from 'react-redux';
+import { addPizza, delletePizza, minusPizza } from '../../Redux/cartSlice';
 
 type CartItemProps = {
   id: string;
@@ -10,13 +10,12 @@ type CartItemProps = {
   size: number;
   count: number;
   price: number;
-}
+};
 
 const CartItem: React.FC<CartItemProps> = ({ id, imageUrl, name, type, size, count, price }) => {
-
-  const pizza = {id, imageUrl, name, type, size, count, price};
+  const pizza = { id, imageUrl, name, type, size, count, price };
   const dispatch = useDispatch();
-  
+
   return (
     <div className="cart__item">
       <div className="cart__item-img">
@@ -29,7 +28,8 @@ const CartItem: React.FC<CartItemProps> = ({ id, imageUrl, name, type, size, cou
         </p>
       </div>
       <div className="cart__item-count">
-        <div
+        <button
+          disabled={count === 1}
           className="button button--outline button--circle cart__item-count-minus"
           onClick={() => dispatch(minusPizza(id))}
         >
@@ -49,9 +49,9 @@ const CartItem: React.FC<CartItemProps> = ({ id, imageUrl, name, type, size, cou
               fill="#EB5A1E"
             />
           </svg>
-        </div>
+        </button>
         <b>{count}</b>
-        <div
+        <button
           className="button button--outline button--circle cart__item-count-plus"
           onClick={() => dispatch(addPizza(pizza))}
         >
@@ -71,15 +71,12 @@ const CartItem: React.FC<CartItemProps> = ({ id, imageUrl, name, type, size, cou
               fill="#EB5A1E"
             />
           </svg>
-        </div>
+        </button>
       </div>
       <div className="cart__item-price">
         <b>{price * count} ₽</b>
       </div>
-      <div
-        className="cart__item-remove"
-        onClick={() => dispatch(delletePizza(id))}
-      >
+      <div className="cart__item-remove" onClick={() => dispatch(delletePizza(id))}>
         <div className="button button--outline button--circle">
           <svg
             width="10"

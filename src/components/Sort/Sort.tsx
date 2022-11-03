@@ -1,12 +1,17 @@
 import React from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { setActiveSortBy, selectFilter, TSortItem } from "../../Redux/filterSlice";
+import { useDispatch } from "react-redux";
+import { setActiveSortBy, TSortItem } from "../../Redux/filterSlice";
 
-const Sort: React.FC = () => {
-  const [isVisible, setVisible] = React.useState(false);
-  const { sortBy, activeSortBy }  = useSelector(selectFilter);
+type TSortProps ={
+  sortBy:TSortItem[];
+  activeSortBy: TSortItem;
+}
+
+const Sort: React.FC<TSortProps> = React.memo(({sortBy , activeSortBy}) => {
+
   const dispatch = useDispatch();
   const sortRef = React.useRef<HTMLDivElement>(null);
+  const [isVisible, setVisible] = React.useState(false);
 
   const changeType = (obj: TSortItem) => {
     dispatch(setActiveSortBy(obj));
@@ -60,6 +65,6 @@ const Sort: React.FC = () => {
       )}
     </div>
   );
-}
+})
 
 export default Sort;
