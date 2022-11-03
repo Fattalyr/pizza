@@ -1,14 +1,19 @@
-import React from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { addPizza, selectCountCart } from "../../Redux/cartSlice";
-import { Link } from "react-router-dom";
-import { TPizza } from "../../Redux/fetchPizzasSlice";
+import React from 'react';
+import { Link } from 'react-router-dom';
 
+import { TPizza } from '../../Redux/fetchPizzasSlice';
+import { useDispatch, useSelector } from 'react-redux';
+import { addPizza, selectCountCart } from '../../Redux/cartSlice';
 
-const Pizza: React.FC<TPizza>= ({ imageUrl, name, sizes, price, types, id }) => {
+const Pizza: React.FC<TPizza> = ({ imageUrl, name, sizes, price, types, id }) => {
+  const typesPizzas = ['тонкое', 'традиционное'];
   const [typePizza, setTypePizza] = React.useState(0);
   const [sizePizza, setSizePizza] = React.useState(0);
-  const typesPizzas = ["тонкое", "традиционное"];
+
+  const dispatch = useDispatch();
+  const count = useSelector(selectCountCart(id));
+
+  const addedCount = count ? count.count : 0;
 
   const items = {
     imageUrl,
@@ -19,9 +24,6 @@ const Pizza: React.FC<TPizza>= ({ imageUrl, name, sizes, price, types, id }) => 
     id,
     count: 1,
   };
-  const dispatch = useDispatch();
-  const count = useSelector(selectCountCart(id));
-  const addedCount = count ? count.count : 0;
 
   return (
     <div className="pizza-block">
@@ -34,7 +36,7 @@ const Pizza: React.FC<TPizza>= ({ imageUrl, name, sizes, price, types, id }) => 
           {types.map((type, index) => (
             <li
               key={index}
-              className={typePizza === index ? "active" : ""}
+              className={typePizza === index ? 'active' : ''}
               onClick={() => setTypePizza(index)}
             >
               {typesPizzas[type]}
@@ -45,7 +47,7 @@ const Pizza: React.FC<TPizza>= ({ imageUrl, name, sizes, price, types, id }) => 
           {sizes.map((size, index) => (
             <li
               key={index}
-              className={sizePizza === index ? "active" : ""}
+              className={sizePizza === index ? 'active' : ''}
               onClick={() => setSizePizza(index)}
             >
               {size}
@@ -77,6 +79,6 @@ const Pizza: React.FC<TPizza>= ({ imageUrl, name, sizes, price, types, id }) => 
       </div>
     </div>
   );
-}
+};
 
 export default Pizza;

@@ -1,19 +1,19 @@
-import React, { ChangeEvent } from "react";
-import style from "./Search.module.scss";
-import debounce from "lodash.debounce";
-import { useDispatch } from "react-redux";
-import { setSearchValue } from "../../Redux/filterSlice";
+import style from './Search.module.scss';
+import React, { ChangeEvent } from 'react';
+import debounce from 'lodash.debounce';
+
+import { useDispatch } from 'react-redux';
+import { setSearchValue } from '../../Redux/filterSlice';
 
 const Search: React.FC = () => {
-  const [value, setValue] = React.useState("");
+  const [value, setValue] = React.useState('');
 
   const dispatch = useDispatch();
   const inputRef = React.useRef<HTMLInputElement>(null);
 
- 
   const updateSearchValue = React.useCallback(
     debounce((str) => dispatch(setSearchValue(str)), 250),
-    []
+    [],
   );
 
   const onChangeInput = (e: ChangeEvent<HTMLInputElement>) => {
@@ -23,11 +23,7 @@ const Search: React.FC = () => {
 
   return (
     <div className={style.root}>
-      <svg
-        className={style.icon}
-        viewBox="0 0 32 32"
-        xmlns="http://www.w3.org/2000/svg"
-      >
+      <svg className={style.icon} viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
         <path d="M29.71,28.29l-6.5-6.5-.07,0a12,12,0,1,0-1.39,1.39s0,.05,0,.07l6.5,6.5a1,1,0,0,0,1.42,0A1,1,0,0,0,29.71,28.29ZM14,24A10,10,0,1,1,24,14,10,10,0,0,1,14,24Z" />
       </svg>
       <input
@@ -40,8 +36,8 @@ const Search: React.FC = () => {
       {value && (
         <svg
           onClick={() => {
-            dispatch(setSearchValue(""));
-            setValue("");
+            dispatch(setSearchValue(''));
+            setValue('');
             inputRef.current?.focus();
           }}
           className={style.clearIcon}
@@ -53,6 +49,6 @@ const Search: React.FC = () => {
       )}
     </div>
   );
-}
+};
 
 export default Search;

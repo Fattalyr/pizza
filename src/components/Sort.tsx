@@ -1,14 +1,14 @@
-import React from "react";
-import { useDispatch } from "react-redux";
-import { setActiveSortBy, TSortItem } from "../../Redux/filterSlice";
+import React from 'react';
 
-type TSortProps ={
-  sortBy:TSortItem[];
+import { useDispatch } from 'react-redux';
+import { setActiveSortBy, TSortItem } from '../Redux/filterSlice';
+
+type TSortProps = {
+  sortBy: TSortItem[];
   activeSortBy: TSortItem;
-}
+};
 
-const Sort: React.FC<TSortProps> = React.memo(({sortBy , activeSortBy}) => {
-
+const Sort: React.FC<TSortProps> = React.memo(({ sortBy, activeSortBy }) => {
   const dispatch = useDispatch();
   const sortRef = React.useRef<HTMLDivElement>(null);
   const [isVisible, setVisible] = React.useState(false);
@@ -20,20 +20,20 @@ const Sort: React.FC<TSortProps> = React.memo(({sortBy , activeSortBy}) => {
 
   React.useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
-     const _event = event as MouseEvent & { path: Node[]} //переопределили тип MouseEvent
+      const _event = event as MouseEvent & { path: Node[] }; //переопределили тип MouseEvent
       if (sortRef.current && !_event.path.includes(sortRef.current)) {
         setVisible(false);
       }
     };
-    document.body.addEventListener("click", handleClickOutside);
-    return () => document.body.removeEventListener("click", handleClickOutside);
+    document.body.addEventListener('click', handleClickOutside);
+    return () => document.body.removeEventListener('click', handleClickOutside);
   }, []);
 
   return (
     <div ref={sortRef} className="sort">
       <div className="sort__label">
         <svg
-          className={isVisible ? "rotated" : " "}
+          className={isVisible ? 'rotated' : ' '}
           width="10"
           height="6"
           viewBox="0 0 10 6"
@@ -53,7 +53,7 @@ const Sort: React.FC<TSortProps> = React.memo(({sortBy , activeSortBy}) => {
           <ul>
             {sortBy.map((sort, index) => (
               <li
-                className={sort.name === activeSortBy.name ? "active" : ""}
+                className={sort.name === activeSortBy.name ? 'active' : ''}
                 key={index}
                 onClick={() => changeType(sort)}
               >
@@ -65,6 +65,6 @@ const Sort: React.FC<TSortProps> = React.memo(({sortBy , activeSortBy}) => {
       )}
     </div>
   );
-})
+});
 
 export default Sort;

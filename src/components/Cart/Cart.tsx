@@ -1,13 +1,16 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
+
 import { useDispatch, useSelector } from 'react-redux';
 import { revomeCartItems, selectCart } from '../../Redux/cartSlice';
+
 import CartItem from './CartItem';
-import { Link } from 'react-router-dom';
 import CartEmpty from './CartEmpty';
 
 const Cart: React.FC = () => {
   const dispatch = useDispatch();
   const { items, countPizzas, totalPrice } = useSelector(selectCart);
+
   return !countPizzas ? (
     <CartEmpty />
   ) : (
@@ -115,7 +118,6 @@ const Cart: React.FC = () => {
                   strokeLinejoin="round"
                 />
               </svg>
-
               <span>Вернуться назад</span>
             </Link>
             <div className="button pay-btn">

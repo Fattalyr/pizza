@@ -1,19 +1,20 @@
 import React from 'react';
-import Skeleton from '../Skeleton/Skeleton';
-import Pagination from '../Pagination/Pagination';
+
 import { useSelector } from 'react-redux';
-import { fetchPizzas, selectPizzas } from '../../Redux/fetchPizzasSlice';
-import { selectFilter } from '../../Redux/filterSlice';
-import Sort from '../Sort/Sort';
-import Pizza from '../Pizza/Pizza';
-import Categories from '../Categories/Categories';
-import { useAppDispatch } from '../../Redux/store';
+import { useAppDispatch } from '../Redux/store';
+import { selectFilter } from '../Redux/filterSlice';
+import { fetchPizzas, selectPizzas } from '../Redux/fetchPizzasSlice';
+
+import Sort from './Sort';
+import Pizza from './Pizza/Pizza';
+import Skeleton from './Skeleton/Skeleton';
+import Pagination from './Pagination/Pagination';
+import Categories from './Categories';
 
 const Home: React.FC = () => {
   const dispatch = useAppDispatch();
 
   const { items, countPizzas, loading } = useSelector(selectPizzas);
-
   const { categories, activeCatogorie, sortBy, activeSortBy, onPage, searchValue } =
     useSelector(selectFilter);
 

@@ -1,15 +1,17 @@
-import React from "react";
-import ReactPaginate from "react-paginate";
-import { useDispatch } from "react-redux";
-import { setPage } from "../../Redux/filterSlice";
-import style from "./Pagination.module.scss";
+import React from 'react';
+import ReactPaginate from 'react-paginate';
+import style from './Pagination.module.scss';
+
+import { useDispatch } from 'react-redux';
+import { setPage } from '../../Redux/filterSlice';
 
 type PaginationProps = {
-  countPizzas: number
-}
+  countPizzas: number;
+};
 
 const Pagination: React.FC<PaginationProps> = ({ countPizzas }) => {
   const dispatch = useDispatch();
+
   return (
     <div>
       <ReactPaginate
@@ -23,6 +25,6 @@ const Pagination: React.FC<PaginationProps> = ({ countPizzas }) => {
       />
     </div>
   );
-}
+};
 
 export default Pagination;

@@ -1,14 +1,15 @@
-import React from "react";
-import { Link } from "react-router-dom";
-import logo from "../../assets/img/pizza-logo.svg";
-import Search from "../Search/Search";
-import { useSelector } from "react-redux";
-import { selectCart } from "../../Redux/cartSlice";
-import { useLocation } from "react-router-dom";
+import React from 'react';
+import { Link, useLocation } from 'react-router-dom';
+
+import { useSelector } from 'react-redux';
+import { selectCart } from '../Redux/cartSlice';
+
+import Search from './Search/Search';
+import logo from '../assets/img/pizza-logo.svg';
 
 const Header: React.FC = () => {
-  const { countPizzas, totalPrice } = useSelector(selectCart);
   const location = useLocation();
+  const { countPizzas, totalPrice } = useSelector(selectCart);
 
   return (
     <div className="header">
@@ -22,7 +23,7 @@ const Header: React.FC = () => {
             </div>
           </div>
         </Link>
-        {location.pathname !== "/cart" && (
+        {location.pathname !== '/cart' && (
           <>
             <Search />
             <div className="header__cart">
@@ -68,6 +69,6 @@ const Header: React.FC = () => {
       </div>
     </div>
   );
-}
+};
 
 export default Header;

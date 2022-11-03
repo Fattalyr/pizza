@@ -1,18 +1,21 @@
-import React, { Suspense } from 'react';
-import Header from './components/Header/Header';
 import './scss/app.scss';
-import NotFound from './components/NotFound/NotFound';
-import Home from './components/Home/Home';
+import React, { Suspense } from 'react';
 import { Routes, Route } from 'react-router-dom';
-// import Cart from './components/Cart/Cart';
-import PizzaParams from './components/Pizza/PizzaParams';
+
 import { useSelector } from 'react-redux';
 import { selectCart } from './Redux/cartSlice';
+
+import Home from './components/Home';
+import Header from './components/Header';
+import NotFound from './components/NotFound/NotFound';
+import PizzaParams from './components/Pizza/PizzaParams';
+
 const Cart = React.lazy(() => import(/* webpackChunkName:"Cart"*/ './components/Cart/Cart'));
 
 const App: React.FC = () => {
-  const isMounted = React.useRef(false);
   const state = useSelector(selectCart);
+  const isMounted = React.useRef(false);
+
   React.useEffect(() => {
     if (isMounted.current) {
       const json = JSON.stringify(state.items);
