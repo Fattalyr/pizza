@@ -19,7 +19,7 @@ const PizzaParams: React.FC = () => {
       }
     }
     getPizza();
-  }, []);
+  });
 
   return (
     <>
